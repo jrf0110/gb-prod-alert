@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
+    <link href="//netdna.bootstrapcdn.com/font-awesome/3.0.2/css/font-awesome.css" rel="stylesheet">
+    <link href='http://fonts.googleapis.com/css?family=Roboto+Slab:400,100,700,300' rel='stylesheet' type='text/css'>
+
+    <style>
+      body {
+        font-family: 'Roboto Slab', serif;
+        background: url(images/body-bg.jpg) repeat;
+      }
+
+
+    </style>
+
+    <script src="http://code.jquery.com/jquery.min.js"></script>
+    <script>
+      var config = (function(){
+        var exports = {
+          tickInterval: 1000
+        , apps: {
+            // Spiderman
+            web: 'http://dc351.4shared.com/img/1469977813/8e98d8a1/dlink__2Fdownload_2F2X-pVek2_3Ftsid_3D20130614-121241-b10697b0/preview.mp3'
+          }
+        };
+
+        return exports;
+      })();
+
+      var utils = (function(){
+        var utils = {};
+
+        utils.dom = jQuery;
+        utils.domready = jQuery;
+
+        utils.filter = function(set, fn){
+          var filtered = [];
+          for (var i = 0, l = set.length; i < l; ++i){
+            if (fn(set[i])) filtered.push(set[i]);
+          }
+          return filtered;
+        };
+
+        utils.ajax = function(method, url, data, callback){
+          switch (method){
+            case "get":     method = "GET";     break;
+            case "post":    method = "POST";    break;
+            case "del":     method = "DELETE";  break;
+            case "put":     method = "PUT";     break;
+            case "patch":   method = "PUT";     break;
+          }
+
+          if (typeof data === "function"){
+            callback = data;
+            data = null;
+          }
+
+          if (method === "GET" || method === "get"){
+            url += utils.queryParams(data);
+            data = null;
+          }
+
+          var ajax = {
+            type: method
+          , method: method
+          , url: url
+          , xhrFields: { withCredentials: true }
+          , crossDomain: true
+          , success: function(results){
+              if (typeof results == 'string' && results) results = JSON.parse(results);
+              callback && callback(null, results);
+            }
+          , error: function(error, results, res, r){
+              callback && callback((error.responseText ? JSON.parse(error.responseText) : error) || true);
+            }
+          };
+
+          if (ajax.type != 'GET'){
+            ajax.headers = {
+              'Content-Type': 'application/json'
+            };
+          }
+
+          if (data) ajax.data = JSON.stringify(data);
+
+          $.ajax(ajax);
+        };
+
+        utils.get = function(url, params, callback){
+          utils.ajax('get', url, params, callback);
+          return utils;
+        };
+
+        utils.post = function(url, data, callback){
+          utils.ajax('post', url, data, callback);
+          return utils;
+        };
+
+        utils.put = function(url, data, callback){
+          utils.ajax('put', url, data, callback);
+          return utils;
+        };
+
+         utils.patch = function(url, data, callback){
+          utils.ajax('patch', url, data, callback);
+          return utils;
+        };
+
+        utils.del = function(url, data, callback){
+          utils.ajax('delete', url, data, callback);
+          return utils;
+        };
+
+        utils.queryParams = function(data){
+          if (typeof data !== "object") return "";
+          var params = "?";
+          for (var key in data){
+            params += key + "=" + data[key] + "&";
+          }
+          return params.substring(0, params.length - 1);
+        };
+
+        utils.noop = function(){};
+
+        return utils;
+      })();
+
+      $(function(){
+        var $log = $('#log');
+
+        var logError = function(error){
+          $log.html( "<li>" + JSON.stringify(error) + "</li>" + $log.html() )
+        };
+
+        var $player = $('#player');
+
+        var stop = false;
+
+        var onTick = function(){
+          if (stop) return;
+
+          utils.get('/deployments', function(error, result){
+            if (error) return logError(error);
+
+            if (!result.app || !config.apps[result.app]) return setTimeout(onTick, config.tickInterval);
+
+            $player.attr('src', config.apps[result.app]);
+
+            $player[0].play();
+
+            setTimeout(function(){
+              $player[0].stop();
+
+              setTimeout(onTick, config.tickInterval);
+            }, config.songLength);
+          });
+        };
+      });
+    </script>
+  </head>
+  <body>
+    <audio src="" id="player"></audio>
+    <ul id="log"></ul>
+  </body>
+</html>
