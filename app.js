@@ -38,7 +38,7 @@ app.post('/deployments', function(req, res){
 });
 
 app.post('/deployments/:app', function(req, res){
-  deployments.push(req.params('app'));
+  deployments.push(req.param('app'));
 });
 
 app.get('/deployments', function(req, res){
