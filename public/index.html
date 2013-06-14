@@ -18,6 +18,8 @@
       var config = (function(){
         var exports = {
           tickInterval: 1000
+        , songLength: 1000 * 10
+
         , apps: {
             // Spiderman
             web: 'http://dc351.4shared.com/img/1469977813/8e98d8a1/dlink__2Fdownload_2F2X-pVek2_3Ftsid_3D20130614-121241-b10697b0/preview.mp3'
@@ -149,7 +151,7 @@
             $player[0].play();
 
             setTimeout(function(){
-              $player[0].stop();
+              $player[0].pause();
 
               setTimeout(onTick, config.tickInterval);
             }, config.songLength);
