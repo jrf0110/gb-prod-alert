@@ -37,6 +37,10 @@ app.post('/deployments', function(req, res){
   deployments.push(req.body.app);
 });
 
+app.post('/deployments/:app', function(req, res){
+  deployments.push(req.params('app'));
+});
+
 app.get('/deployments', function(req, res){
   res.json({ app: deployments.pop() });
 });
