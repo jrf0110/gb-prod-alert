@@ -35,10 +35,12 @@ var deployments = [];
 
 app.post('/deployments', function(req, res){
   deployments.push(req.body.app);
+  res.status(204).end();
 });
 
 app.post('/deployments/:app', function(req, res){
   deployments.push(req.param('app'));
+  res.status(204).end();
 });
 
 app.get('/deployments', function(req, res){
