@@ -136,10 +136,10 @@
 
         var $player = $('#player');
 
-        var stop = false;
+        var _stop = false;
 
         var onTick = function(){
-          if (stop) return;
+          if (_stop) return;
 
           utils.get('/deployments', function(error, result){
             if (error) logError(error);
