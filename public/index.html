@@ -127,6 +127,8 @@
         return utils;
       })();
 
+      var _stop = false;
+
       $(function(){
         var $log = $('#log');
 
@@ -136,7 +138,6 @@
 
         var $player = $('#player');
 
-        var _stop = false;
 
         var onTick = function(){
           if (_stop) return;
