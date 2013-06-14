@@ -142,7 +142,7 @@
           if (stop) return;
 
           utils.get('/deployments', function(error, result){
-            if (error) return logError(error);
+            if (error) logError(error);
 
             if (!result.app || !config.apps[result.app]) return setTimeout(onTick, config.tickInterval);
 
