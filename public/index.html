@@ -18,7 +18,7 @@
       var config = (function(){
         var exports = {
           tickInterval: 1000
-        , songLength: 1000 * 16
+        , songLength: 1000 * 30
 
         , apps: {
             // Spiderman
@@ -148,6 +148,8 @@
             if (!result.app || !config.apps[result.app]) return setTimeout(onTick, config.tickInterval);
 
             $player.attr('src', config.apps[result.app]);
+
+            $player.attr('duration', )
 
             $player[0].play();
 
