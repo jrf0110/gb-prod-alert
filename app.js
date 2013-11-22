@@ -5,7 +5,8 @@
 
 var express = require('express')
   , http = require('http')
-  , path = require('path');
+  , path = require('path')
+  , chat = require('./chat');
 
 var app = express();
 
@@ -39,6 +40,13 @@ app.post('/deployments', function(req, res){
 });
 
 app.post('/deployments/:app', function(req, res){
+
+  // Send hipchat notification
+  chat.send({
+    room_id: 'Cater',
+    message: chat.createOrderMesssage(req.body)
+  });
+
   deployments.push(req.param('app'));
   res.status(204).end();
 });
