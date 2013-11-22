@@ -32,6 +32,8 @@ module.exports = {
     request({
       url: 'https://api.hipchat.com/v1/rooms/message',
       qs: qs
+    }, function(error, response, body) {
+      if (error) console.error(error);
     });
   }
 };
