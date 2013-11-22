@@ -40,11 +40,12 @@ app.post('/deployments', function(req, res){
 });
 
 app.post('/deployments/:app', function(req, res){
+  var order = req.body;
 
   // Send hipchat notification
   chat.send({
     room_id: 'Cater',
-    message: chat.createOrderMesssage(req.body)
+    message: chat.createOrderMesssage(order)
   });
 
   deployments.push(req.param('app'));
