@@ -1,4 +1,4 @@
-Setup
+Environment Vars
 -----
 
 Set **HIPCHAT_TOKEN** with your Hipchat API token per
