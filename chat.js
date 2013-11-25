@@ -1,6 +1,11 @@
 var request = require('request')
   , apiToken = process.env.HIPCHAT_TOKEN;
 
+var dollars = function(pennies) {
+  var cents = pennies == null ? 0 : parseFloat(pennies); // parse as float incase of partial cents
+  return Number.isNaN(cents) ? '' : (cents / 100).toFixed(2); // partial cents get rounded here
+};
+
 module.exports = {
 
   /**
@@ -14,7 +19,7 @@ module.exports = {
 
     return [
       'A new order was accepted from ' + order.restaurant_name + ' delivering to ',
-      order.user.name + ' for a total of $' + order.total,
+      order.user.name + ' for a total of $' + dollars( order.total ),
       '. View online at https://www.goodybag.com/orders/' + order.id
     ].join('');
   },
