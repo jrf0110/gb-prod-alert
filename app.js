@@ -44,12 +44,10 @@ app.post('/deployments/:app', function(req, res){
 
   var order = req.body;
   // Send hipchat notification
-  if (order) {
-    chat.send({
-      room_id: 'Cater',
-      message: chat.createOrderMesssage(order)
-    });
-  }
+  chat.send({
+    room_id: 'Cater',
+    message: chat.createOrderMesssage(order)
+  });
 
   deployments.push(req.param('app'));
   res.status(204).end();
