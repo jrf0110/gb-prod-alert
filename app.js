@@ -40,13 +40,16 @@ app.post('/deployments', function(req, res){
 });
 
 app.post('/deployments/:app', function(req, res){
-  var order = req.body;
+  if (req.param('app') !== 'accepted') return res.status(400).end();
 
+  var order = req.body;
   // Send hipchat notification
-  chat.send({
-    room_id: 'Cater',
-    message: chat.createOrderMesssage(order)
-  });
+  if (order) {
+    chat.send({
+      room_id: 'Cater',
+      message: chat.createOrderMesssage(order)
+    });
+  }
 
   deployments.push(req.param('app'));
   res.status(204).end();
