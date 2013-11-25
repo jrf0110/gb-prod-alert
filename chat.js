@@ -34,7 +34,7 @@ module.exports = {
       from:               options.from || 'Goody Bot',
       message:            options.message || 'Hello',
       message_format:     options.message_format || 'text',
-      background:         options.color || 'green',
+      color:              options.color || 'green',
       format:             options.format || 'json',
       auth_token:         options.auth_token || apiToken
     };
