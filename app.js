@@ -45,7 +45,7 @@ app.post('/deployments/:app', function(req, res){
     // Send hipchat notification
     chat.send({
       room_id: 'Cater',
-      message: chat.createOrderMesssage(order)
+      message: chat.createOrderMessage(order)
     });
   }
 

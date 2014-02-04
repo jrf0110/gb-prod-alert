@@ -11,15 +11,14 @@ module.exports = {
   /**
    * Returns a string based on the order
    */
-  createOrderMesssage: function(order) {
-
-    // Ensure info is present
-    if (!order.restaurant_name || !order.user || !order.user.name || !order.total || !order.id)
-      return 'An order was accepted, please check the website for more details.';
+  createOrderMessage: function(order) {
+    if (!order) 
+      return 'Beep boop, order not found! Initiating self-destruction sequence..';
 
     return [
-      'A new order was accepted from ' + order.restaurant_name + ' delivering to ',
-      order.user.name + ' for a total of $' + dollars( order.total ),
+      'A new order was accepted from ' + order.restaurant_name,
+      order.user.name ? ' delivering to ' + order.user.name : '',
+      ' for a total of $' + dollars( order.total ),
       '. View online at https://www.goodybag.com/orders/' + order.id
     ].join('');
   },
