@@ -16,7 +16,7 @@ module.exports = {
       return 'Beep boop, order not found! Initiating self-destruction sequence..';
 
     return [
-      'A new order was accepted from ' + order.restaurant_name,
+      'A new order was accepted from ' + order.restaurant.name,
       order.user.name ? ' delivering to ' + order.user.name : '',
       ' for a total of $' + dollars( order.total ),
       '. View online at https://www.goodybag.com/orders/' + order.id
