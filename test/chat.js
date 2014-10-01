@@ -5,7 +5,7 @@ describe('chat', function(){
   describe('createOrderMessage', function(){
     it('should handle complete order', function(){
       var order = {
-        restaurant_name: 'Taco Bell'
+        restaurant: { name: 'Taco Bell' }
       , id: 9
       , total: 1000
       , user: { }
@@ -17,7 +17,7 @@ describe('chat', function(){
 
     it('should handle order with missing username', function() {
       var order = {
-        restaurant_name: 'Burger King'
+        restaurant: { name: 'Burger King' }
       , id: 10
       , total: 7300
       , user: {
